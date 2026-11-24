@@ -17,6 +17,11 @@ ENTRY = (
 )
 
 
+# Gate for this bounty: one line, 1 to MAX_CHARS characters, roasting
+# the agent our own team built -- never a generic robot joke.
+MAX_CHARS = 200
+
+
 def main():
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR")
     if not out_dir:
@@ -43,9 +48,9 @@ def main():
     if written != ENTRY:
         print("entry.txt does not match the intended text", file=sys.stderr)
         return 1
-    if not 1 <= len(written) <= 200:
-        print("entry is %d characters, outside the 1-200 range"
-              % len(written), file=sys.stderr)
+    if not 1 <= len(written) <= MAX_CHARS:
+        print("entry is %d characters, outside the 1-%d range"
+              % (len(written), MAX_CHARS), file=sys.stderr)
         return 1
     if not written.strip():
         print("entry is only whitespace", file=sys.stderr)
@@ -57,8 +62,8 @@ def main():
         print("entry must be a single line", file=sys.stderr)
         return 1
 
-    print("wrote %s (%d characters, within the 1-200 gate)"
-          % (path, len(written)))
+    print("wrote %s (%d characters, within the 1-%d gate)"
+          % (path, len(written), MAX_CHARS))
     return 0
 
 
